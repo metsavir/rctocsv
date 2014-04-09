@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-50018106-1', 'kapsi.fi');
+    ga('send', 'pageview');
+
+  </script>
+ 
+  </head>
+
+  <body>
+    <div class="container">
+      <p class="title bg-info">
+        <a href="http://www.resultcode.fi/" target="_blank">Resultcodesta</a> joukkueen ottelut csv-muodossa <a href="https://support.google.com/calendar/answer/45656?hl=fi" target="_blank">importattavaksi Google-kalenteriin</a>. Vaatii toimiakseen, että ottelun päivämäärä ja aika on asetettu oikein resultcodessa.
+      </p>
+
+      <div class="row">
+        <div class="col-md-4">
+          <form method="post" role="form">
+            <div class="form-group">
+              <label for="team_id">JoukkueID</label>
+              <input type="text" name="team_id" id="team_id" class="form-control" value="{{team_id}}" required>
+            </div>
+
+            <div class="form-group">
+              <label for="frm_start">Ottelut alkaen (esim. vvvv tai vvvv-kk-pp)</label>
+              <input type="text" id="frm_start" name="frm_start" class="form-control" value="{{frm_start}}">
+            </div>
+
+            <div class="form-group">
+              <label for="frm_end">Ottelut loppuen (esim. vvvv tai vvvv-kk-pp)</label>
+              <input type="text" id="frm_end" name="frm_end" class="form-control" value="{{frm_end}}">
+            </div>
+
+            <div class="form-group">
+              <label for="duration">Tapahtuman kesto</label>
+              <select class="form-control" id="duration" name="duration">
+                <option value="0" {% if duration == "0" %}selected{% endif %}>Ei mitään</option>
+                <option value="1" {% if duration == "1" %}selected{% endif %}>1h</option>
+                <option value="2" {% if duration == "2" %}selected{% endif %}>2h</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-default" name="show"><span class="glyphicon glyphicon-list-alt"></span> Näytä</button>
+            <button type="submit" class="btn btn-default" name="download"><span class="glyphicon glyphicon-download-alt"></span> Lataa</button>
+          </form>
+        </div>
+
+        <div class="col-md-8">
+          {% if response %}
+            <p><pre class="bg-success">{{ response }}</pre></p>
+          {% elif error %} 
+            <p><pre class="bg-danger">{{ error }}</pre></p>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
+
+
